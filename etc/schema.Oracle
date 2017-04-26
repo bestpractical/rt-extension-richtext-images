@@ -1,0 +1,10 @@
+CREATE SEQUENCE RTxRichTextUploads_seq;
+CREATE TABLE RTxRichTextUploads (
+    id              NUMBER(11,0)    CONSTRAINT RTxRichTextUploads_key PRIMARY KEY,
+    Filename        VARCHAR2(255),
+    Digest          VARCHAR2(255),
+    ContentType     VARCHAR2(80),
+    ContentEncoding VARCHAR2(80),
+    Headers         CLOB,
+    Content         CLOB
+);

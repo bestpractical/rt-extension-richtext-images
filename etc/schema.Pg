@@ -1,0 +1,12 @@
+CREATE SEQUENCE rtxrichtextuploads_id_seq;
+CREATE TABLE RTxRichTextUploads (
+    id               integer DEFAULT nextval('rtxrichtextuploads_id_seq'),
+    Filename         varchar(255) NULL,
+    Digest           varchar(255) NULL,
+    ContentType      varchar(80) NULL,
+    ContentEncoding  varchar(80) NULL,
+    Headers          text NULL,
+    Content          text NULL,
+
+    PRIMARY KEY (id)
+);

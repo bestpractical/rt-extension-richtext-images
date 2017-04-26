@@ -1,0 +1,20 @@
+<%ARGS>
+$id => ''
+$Digest => ''
+</%ARGS>
+<%INIT>
+my $upload = RT::RichTextUpload->new($session{CurrentUser});
+$upload->LoadByCols(
+    id     => $id,
+    Digest => $Digest,
+);
+
+if (!$upload->Id) {
+    $m->abort;
+}
+
+$r->content_type($upload->ContentType);
+$m->clear_buffer();
+$m->out($upload->DecodedContent);
+$m->abort;
+</%INIT>

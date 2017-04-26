@@ -1,0 +1,10 @@
+CREATE TABLE RTxRichTextUploads (
+    id                int(11)       NOT NULL AUTO_INCREMENT,
+    Filename          varchar(255)  NULL,
+    Digest            varchar(255)  NULL,
+    ContentType       varchar(80)   CHARACTER SET ascii NULL,
+    ContentEncoding   varchar(80)   CHARACTER SET ascii NULL,
+    Headers           LONGTEXT      NULL,
+    Content           LONGBLOB      NULL,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -1,0 +1,44 @@
+<%init>
+# ckeditor Upload Image always calls its argument "upload"
+my $entity = MakeMIMEEntity(AttachmentFieldName => 'upload');
+
+# This needs to be decoded because the value is a reference;
+# hence it was not decoded along with all of the standard
+# arguments in DecodeARGS
+my $filename = Encode::decode( "UTF-8", "$ARGS{upload}");
+
+my $encoding = $entity->head->get('Content-Transfer-Encoding');
+$encoding =~ s/\n//; # MIME::Entity includes the newline at the end of headers
+
+my $upload = RT::RichTextUpload->new($session{CurrentUser});
+my ($ok, $msg) = $upload->Create(
+    Filename        => $filename,
+    ContentType     => $entity->mime_type,
+    ContentEncoding => $encoding,
+    Headers         => $entity->stringify_header,
+    Content         => $entity->stringify_body,
+);
+
+if (!$ok) {
+    $m->out( JSON({
+        status   => 'error',
+        uploaded => 0,
+        error    => {
+            message => $msg,
+        },
+    }));
+    $m->abort;
+}
+
+my $render = RT->Config->Get('WebPath') . '/Helpers/Upload/Render?'
+            . $m->comp('/Elements/QueryString', id => $upload->Id, Digest => $upload->Digest);
+
+$r->content_type('application/json; charset=utf-8');
+$m->out( JSON({
+    status   => 'success',
+    uploaded => 1,
+    fileName => $filename,
+    url      => $render,
+}));
+$m->abort;
+</%init>

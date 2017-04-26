@@ -1,0 +1,9 @@
+CREATE TABLE RTxRichTextUploads (
+    id               INTEGER PRIMARY KEY,
+    Filename         varchar(255) collate NOCASE NULL,
+    Digest           varchar(255) collate NOCASE NULL,
+    ContentType      varchar(80)  collate NOCASE NULL,
+    ContentEncoding  varchar(80)  collate NOCASE NULL,
+    Headers          LONGTEXT     collate NOCASE NULL,
+    Content          LONGTEXT     collate NOCASE NULL
+);
